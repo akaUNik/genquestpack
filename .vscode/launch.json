@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "args": ["http://kand.info/node/25220/tour/1"],
+            "args": ["https://db.chgk.info/tour/mono19-1_u.2"],
             "console": "integratedTerminal"
         }
     ]

@@ -87,7 +87,7 @@ def generate_pptx(url, file_stream = None):
 
 	if urlo.netloc == 'kand.info':
 		# pack title
-		pack_title = soup.find('h2', 'with-tabs').string
+		pack_title = soup.find('h2', 'with-tabs').text
 
 		# regexp 
 		# TODO: <div class='razdatka_header'>Раздаточный материал</div> 
@@ -102,7 +102,7 @@ def generate_pptx(url, file_stream = None):
 
 	elif urlo.netloc == 'db.chgk.info':
 		# pack title
-		pack_title = soup.find('h1', 'title').string 
+		pack_title = soup.title.text
 
 		# regexp 
 		question = 'Вопрос '
@@ -174,10 +174,10 @@ def generate_pptx(url, file_stream = None):
 						#text.top += pic.top
 						#os.remove('qimg.jpg')
 						# TODO: add_image
-					if len(list(qp.nextSibling.children)) == 7:
+					if len(list(qp.nextSibling.children)) == 7 and soup.find('img', src = questionimg) != None:
 						add_image(slide, 13, soup.find('img', src = questionimg)['src'])
 					else:
-						handout.text = list(qp.nextSibling.children)[4]
+						handout.text = '' #list(qp.nextSibling.children)[4]
 
 			# Ответ:
 			m = txt.startswith(answer)
@@ -231,7 +231,7 @@ urlo = urlparse(url)
 r = requests.get(url, verify=False)
 page = r.content.decode('utf-8')
 soup = BeautifulSoup(page, 'lxml')
-pack_title = soup.find('h2', 'with-tabs').string
+pack_title = soup.title.text
 
 # если надо скачать все туры (only for kand.info)
 if urlo.path.startswith('/tour/') and urlo.netloc == 'kand.info':
